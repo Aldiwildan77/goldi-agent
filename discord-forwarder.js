@@ -1,4 +1,5 @@
 import {
+  ActivityType,
   Client,
   Events,
   GatewayIntentBits,
@@ -55,6 +56,16 @@ async function postWithRetry(url, body, tries = 3) {
 
 client.once(Events.ClientReady, (c) => {
   console.log(`Logged in as ${c.user.tag} (${c.user.id})`);
+
+  // Set bot presence/status
+  c.user.setPresence({
+    status: 'online',
+    activities: [{
+      name: 'ya',
+      type: ActivityType.Listening,
+    }],
+    afk: false,
+  });
 });
 
 client.on(Events.MessageCreate, async (message) => {
